@@ -1,4 +1,4 @@
-/* Page color scheme */
+/* Page color scheme generated from https://coolors.co/*/
 :root {
     --dark: #006D77;
     --lightgreen: #83C5BE;
@@ -7,18 +7,20 @@
     --darkpeach: #E29578;
 }
 
-/* Setting page font-family */
+/* Setting page font-family and background color*/
 body {
     background-color: var(--dark);
     font-family: 'Roboto Condensed', sans-serif;
 }
 
+/* Placing View Scores and Timer in a row */
 header {
     display: flex;
     justify-content: space-between;
     margin: 16px;
 }
 
+/* Removing default button attributes for View Scores and aligning to the left */
 #view-highscores {
     text-align: left;
     color: var(--gray);
@@ -28,12 +30,14 @@ header {
     font-weight: normal;
 }
 
+/* Match timer to color scheme and give min-width of div to avoid roll over to next line */
 #time {
-    text-align: center;
+    text-align: right;
     color: var(--gray);
-    display: inline-block;
+    min-width: 150px;
 }
 
+/* Centering the center-box within main body of page and adding extra padding at top */
 #main {
     display: flex;
     flex-direction: column;
@@ -42,11 +46,13 @@ header {
     padding-top: 30px;
 }
 
+/* Centering content within the center box and setting to 80% of page width */
 #center-box {
     text-align: center;
     width: 80%;
 }
 
+/* Giving 'page' titles a lighter background with dark text, and gray border that is rounded at top */
 h1, h2 {
     background-color: var(--lightgreen);
     color: var(--dark);
@@ -58,23 +64,27 @@ h1, h2 {
     
 }
 
+/* Specifying padding and font size for start page title */
 h1 {
     padding-top: 12px;
     padding-bottom: 12px;
     font-size: 40px;
 }
 
+/* Specifying padding, text alignment and font-size for the questions */
 h2 {
     font-size: 20px;
     text-align: justify;
     padding: 10px;
 }
 
+/* Giving all forms (i.e. answer fields + submit buttons) a light background and rounded bottom border */
 form {
     background-color: var(--gray);
     border-radius: 0px 0px 15px 15px;
 }
 
+/* Giving the start page intro and scores list a light background to match questions pages */
 p, ul {
     background-color: var(--gray);
     color: var(--dark);
@@ -82,6 +92,7 @@ p, ul {
     padding: 12px; 
 }
 
+/* Setting the radio buttons and their labels to display in a row */
 form div {
     display: flex;
     flex-direction: row;
@@ -89,6 +100,7 @@ form div {
     padding: 8px 8px;
 }
 
+/* Displaying answer choices in a single column with dark text and aligned to left */
 label {
     display: block;
     color: var(--dark);
@@ -96,6 +108,7 @@ label {
     padding-left: 16px;
 }
 
+/* Styling all buttons to match page color scheme with border and 100% width of center-box */
 button {
     background-color: var(--lightgreen);
     color: var(--dark);
@@ -111,53 +124,63 @@ button {
     letter-spacing: 2px;
 }
 
+/* Setting correct, wrong, and error messages to italics with padding to space below center-box*/
 #correct, #wrong, #error-msg {
     padding-top: 8px;
     font-style: italic;
 }
 
+/* Make correct message font color light green */
 #correct {
     color: var(--lightgreen);
 }
 
+/* Make wrong and error message font color dark peach */
 #wrong, #error-msg {
     color: var(--darkpeach);
 }
 
+/* Overide default left-alignment and center All Done and Scores titles */
 #all-done, #highscores-title {
     text-align: center;
 }
 
+/* Make font larger than default p tag */
 #your-score-is {
     font-size: 20px;
-    
 }
 
+/* Setting size of initial input box and adding padding left of placeholder text start */
 #initials {
     flex-basis: 50%;
     padding-left: 2px;
 }
 
+/* Setting size of initials input label and adding padding to align & space with input box */
 #initials-label {
     flex-basis: 35%;
-    padding: 4px 6px 0px 0px;
+    padding: 4px 6px 4px 0px;
     text-align: right;
-    padding-bottom: 4px;
 }
 
+/* Additional padding for the button to submit user's initials */
 #submit-initials {
     padding: 6px 6px;
 }
 
+/* Padding in between each user in the list of scores, and make all initials uppercase */
 li {
     padding: 6px 6px;
     text-transform: uppercase;
 }
 
+/* Flexing the container of the buttons to return to the start and clear the scores so that sit in a row */
 #options-div {
     display: flex;
 }
 
+/* Override default button border radius to adjust for 2 buttons in one row 
+with the Return to Start button on the bottom left of the center box */
 #return-start {
     border-radius: 0px 0px 0px 15px;
     border-right-color: var(--dark);
@@ -165,12 +188,15 @@ li {
     font-size: 16px;
 }
 
+/* Override default button border radius to adjust for 2 buttons in one row
+with the Clear Scores button on the bottom right of the center box */
 #clear-highscores {
     border-radius: 0px 0px 15px 0px;
     border-left-color: var(--dark);
     font-size: 16px;
 }
 
+/* After the scores are cleared, revert style of Return to Start button as the only button at the bottom of center box */
 #return-start-cleared {
     border-radius: 0px 0px 15px 15px;
     border: 1px solid var(--gray);
@@ -178,6 +204,7 @@ li {
     text-align: center;
 }
 
+/* After the scores are cleared, style the newly rendered Scores title */
 #highscores-title-cleared {
     border: 1px solid var(--gray);
     border-bottom: 1px solid var(--dark);
@@ -185,80 +212,85 @@ li {
     text-align: center;
 }
 
+/* Create whitespace in the scores div after the scores are cleared to prevent as much collapse */
 #empty-highscores {
     padding: 50px 50px;
 }
 
+/* When a radio button is not selected before pressing submit, add a box shadow */
 input:invalid {
     box-shadow: 0 0 5px 1px var(--darkpeach);
 }
 
+/* Drop the box shadow once a user clicks an answer following an invalid message */
 #initials, input:focus:invalid {
   box-shadow: none;
 }
 
-button:hover {
+/* For mobile-first approach, add box shadow and text shadow when buttons are clicked */
+button:focus {
     box-shadow: 0px 0px 5px var(--peach);
-    cursor: pointer;
     text-shadow: 1px 1px var(--gray);
 }
 
-#view-highscores:hover {
+/* For mobile-first approach, override box-shadow and text-shadow of default button */
+#view-highscores:focus {
     box-shadow: none;
     text-shadow: 0.5px 0.5px var(--gray);
 }
 
-label:hover {
-    font-weight: bolder;
-}
-
-#initials-label:hover {
-    font-weight: normal;
-}
-
-/* Adjust for tablet screens */
+/* Adjust display for tablet screens */
 @media screen and (min-width: 768px) {
+    /* Additional padding of center box from top of screen */
     #center-box {
         padding-top: 40px;
     }
     
+    /* Increase p tag font size slightly */
     p {
         font-size: 18px;
     } 
     
+    /* Increase header item font sizes */
     #view-highscores, #time {
         font-size: 16px;
     }
 
+    /* Additional padding and increased font size for buttons and users in list of scores */
     button, li {
         padding: 8px 8px;
         font-size: 24px;
     }
 
+    /* Additional padding and increased font size for questions */
     h2 {
         padding: 14px 14px;
         font-size: 24px;
     }
 
+    /* Additional padding and increased font size for answer choices */
     form div {
         padding: 12px 12px;
         font-size: 18px;
     }
 
+    /* Increased font size for All Done and Scores titles */
     #all-done, #highscores-title {
         font-size: 28px;
-        text-align: center;
     }
 
+    /* Additional padding and increased font for initials input div */
     #initials-div {
         font-size: 18px;
         padding-bottom: 16px;
     }
 
+    /* Additional padding within center box for display of user's score */
     #your-score-is {
         padding-top: 16px;
     }
 
+    /* Increased font size for messages and Return to Start and Clear Scores buttons */
     #correct, 
     #wrong, 
     #error-msg, 
@@ -267,65 +299,100 @@ label:hover {
         font-size: 18px;
     }
 
+    /* Adjust whitespace in empty scores list */
     #empty-highscores {
         padding: 75px 75px;
+    }
+
+    /* Change from focus styling of buttons to hover */
+    button:hover {
+        box-shadow: 0px 0px 5px var(--peach);
+        cursor: pointer;
+        text-shadow: 1px 1px var(--gray);
+    }
+
+    /* Change from focus styling of View Scores to hover */
+    #view-highscores:hover {
+        box-shadow: none;
+        text-shadow: 0.5px 0.5px var(--gray);
+    }
+    
+    /* Change from focus styling of answer choices to hover */
+    label:hover {
+        font-weight: bolder;
+    }
+
+    /* Override hover styling of initials input label to keep normal*/
+    #initials-label:hover {
+        font-weight: normal;
     }
 }
 
 /* Adjust for larger desktop screens */
 @media screen and (min-width: 992px) {
+    /* Lessen width of center box and additional padding from top of page */
     #center-box {
         width: 65%;
         padding-top: 60px;
     }
     
+    /* Increased padding and font size for p content */
     p {
         font-size: 24px;
         padding-left: 36px;
         padding-right: 36px;
     } 
     
+    /* Increased font size for header content */
     #view-highscores, #time {
         font-size: 20px;
     }
 
+    /* Increased padding for Timer */
     #time {
         padding: 10px 10px 0px 0px;
     }
 
+    /* Increased padding and font size for buttons and listed user scores */
     button, li {
         padding: 10px 10px;
         font-size: 28px;
     }
     
+    /* Increased font size for Start Page title */
     h1 {
         font-size: 48px;
     }
 
+    /* Increased padding and font size for questions */
     h2 {
         padding: 16px 16px;
         font-size: 28px;
     }
 
+    /* Increased padding and font size for answer choices */
     form div {
         padding: 14px 14px;
         font-size: 20px;
     }
 
+    /* Increased font size for All Done and Scores titles */
     #all-done, #highscores-title {
         font-size: 30px;
-        text-align: center;
     }
 
+    /* Increased font size and padding for initials input div */
     #initials-div {
         font-size: 20px;
         padding-bottom: 20px;
     }
 
+    /* Increased padding around displayed user score */
     #your-score-is {
         padding-top: 20px;
     }
 
+    /* Increased font size for messages, Return to Start and Clear Scores buttons */
     #correct, 
     #wrong, 
     #error-msg,
@@ -334,6 +401,7 @@ label:hover {
         font-size: 20px;
     }
     
+    /* Adjust whitespace in empty scores list */
     #empty-highscores {
         padding: 100px 100px;
     }

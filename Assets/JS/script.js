@@ -1,30 +1,38 @@
-// Creating a variable to select the timer div and set the start time count
+// Creating a variable for the timer div and set the start time count
 let timeEl = document.getElementById("time");
 let secondsLeft = 60;
 
-// Creating a variable to select the main div to display questions or other content
+// Creating a variable to select the center-box div where questions and other content with be dynamically displayed
 let centerBoxEl = document.getElementById("center-box");
 
-// Creating a variable for the View The Highscore button
+// Creating a variable for View Scores button in the header
 let highscoreBtn = document.getElementById("view-highscores");
 
-// Set score to zero at start
+// Setting score to zero at start
 let userScore = 0
 
+// Creating a variable for the timer such that the interval can be cleared when all questions are answered or time is 0
+let timerInterval;
+
+// Creating a function for the Start Page to display
 function renderStartPage() {
+    // Adding a title for the quiz in the center box
     let quizTitleEl = document.createElement("h1");
     quizTitleEl.textContent = "CODING QUIZ";
     centerBoxEl.appendChild(quizTitleEl);
-
+    
+    // Adding quiz introduction to display on page
     let quizBlurbEl = document.createElement("p");
     quizBlurbEl.innerHTML = "Test your coding knowledge! <br></br> Answer the questions in the alloted time and see what you score! Be careful -- wrong answers will cost you 10 seconds. <br></br> Good luck!";
     centerBoxEl.appendChild(quizBlurbEl);
 
+    // Adding a start button to begin the quiz
     let startBtn = document.createElement("button");
     startBtn.textContent = "START QUIZ";
     startBtn.setAttribute("id", "start-btn")
     centerBoxEl.appendChild(startBtn);
 
+    // Making the start button render the first question and start the timer
     startBtn.addEventListener('click', function() {
         // Begin timer interval decrementation when start button clicked
         setTime();
@@ -32,25 +40,27 @@ function renderStartPage() {
         renderQuestion();
     })
 }
+
+// Rendering the Start Page on page open
 renderStartPage();
 
-let timerInterval;
-
+// Creating a function to set a decrementing timer for the game and display on page
 function setTime() {
-    // Create a variable that is a function that decrements the time by 1/sec and displays on the page
-        timerInterval = setInterval(function() {
+    // Creating a function as a variable that decrements the time and displays the countdown on the page
+    timerInterval = setInterval(function() {
         secondsLeft--;
-        timeEl.innerHTML = "Time:" + secondsLeft + "s";
-
+        timeEl.innerHTML = "Time: " + secondsLeft + " seconds";
+        
+        // When the time is 0, clear the timer countdown and display the ALL DONE page
         if(secondsLeft === 0) {
-            // Stops countdown of interval
             clearInterval(timerInterval);
             displayAllDone();
         }
+    // Setting timer decrement by 1 every second (i.e. counts down by 1 sec) 
     }, 1000);
 };
 
-// // Create an array of objects including questions and answers and the correct response
+// Create an array of objects for the quiz questions and their answers and the correct responses for each
 let allQuestions = [
     {
         questionNum: "1",
@@ -99,20 +109,20 @@ let allQuestions = [
     } 
 ]
 
-// Set the starting question to the first question in the allQuestions array
+// Setting the starting question to the first object (i.e. first question and set of answers) in the allQuestions array
 let currQuestionIndex = 0
 
-// Function to display the questions and answers from the array of questions/answers
+// Creating a function to display the questions and answers from the allQuestions array
 function renderQuestion() {
-    // Clear contents of Start page from main div
+    // Clearing contents of Start page from main div
     removeAllChildElements();
 
-    // Add and display the question
+    // Adding and displaying the question
     let questionEl = document.createElement("h2");
     questionEl.textContent = allQuestions[currQuestionIndex].questionNum + ".  " + allQuestions[currQuestionIndex].question;
     centerBoxEl.appendChild(questionEl);
     
-    // Add and display the question answers
+    // Adding and displaying the question answers 
     let ansChoicesEl = document.createElement("form");
     let divAns1 = document.createElement("div");
     let ansChoice1 = document.createElement("input");
@@ -143,6 +153,7 @@ function renderQuestion() {
     ansChoice2.setAttribute("name", "question");
     ansChoice3.setAttribute("name", "question");
     ansChoice4.setAttribute("name", "question");
+    // The answer choices are generated from the allQuestions array, based on the current index of a for loop executed in the checkUserAnswer function below
     ansChoice1Label.textContent = allQuestions[currQuestionIndex].choice1;
     ansChoice2Label.textContent = allQuestions[currQuestionIndex].choice2;
     ansChoice3Label.textContent = allQuestions[currQuestionIndex].choice3;
@@ -168,13 +179,14 @@ function renderQuestion() {
     divAns4.appendChild(ansChoice4Label);
     ansChoicesEl.appendChild(ansSubmit);
     
-    // Creating a function to check if an answer is chosen, display either correct or wrong and
-    // add decrement extra time for wrong answers and increase score by 20pts for correct answers
-    // and move on to next question or end of quiz
+    // Creating a function to check if an answer is chosen, displaying either correct or wrong messages and
+    // decrementing extra time for wrong answers or increasing the score by 20pts for correct answers
+    // and dynamically displaying the next question or end of quiz
     function checkUserAnswer () {
 
         // When the question form is submitted...
         ansChoicesEl.addEventListener("submit", function(event) {
+            // ...generate a message if the user didn't select an answer...
             if (!document.querySelector("input:checked")) {
                 ansChoice1.required = true;
                 ansChoice2.required = true;
@@ -185,26 +197,26 @@ function renderQuestion() {
                 errorMsg.textContent = "Please select an answer."
                 centerBoxEl.appendChild(errorMsg);
             }
-            // Prevent the default behavior...
+            // ... and prevent the default behavior of a form submission...
             event.preventDefault();
 
-            // and pull the user's selection...
+            // ...and pull the user's selection...
             let userAnswer = document.querySelector("input:checked").value;
 
-            // if the user's selection matches the correct answer, display a 'Correct!' message and increase the score by 20pts
-            // if (userAnswer)
+            // ...if the user's selection matches the correct answer, display a 'Correct!' message and increase the score by 20pts
             if (userAnswer === allQuestions[currQuestionIndex].correct) {
                     renderCorrectMsg();
                     userScore = userScore + 20;                
-            }   // but if the user's selection doesn't match the correct answer, display a 'Wrong!' message and decrement the timer by 5sec
+            }   // but if the user's selection doesn't match the correct answer, display a 'Wrong!' message and decrement the timer by 10sec
                 else {
                     renderWrongMsg();
                     secondsLeft = secondsLeft - 10;
                 }
 
-            // After 1 second....
+            // Give the correct/wrong message 1 second time to display and then....
             setTimeout(function() {
                 // Render the next question if all the questions haven't been asked...
+                // by incrementing the current question index by 1 and pulling that index from the allQuestions array if any more are available
                 if(currQuestionIndex < allQuestions.length - 1) {
                     currQuestionIndex++;
                     renderQuestion();
@@ -216,11 +228,11 @@ function renderQuestion() {
     })
     };
 
-    // Call the function to check the user's answers and render the next question or quiz end
+    // Calling the function to check the user's answers and render the next question or quiz end
     checkUserAnswer();
 }
 
-// Creates the message to display when correct answers are submitted
+// Creating a message to display when correct answers are submitted
 function renderCorrectMsg() {
     let correctMsg = document.createElement("div");
     correctMsg.setAttribute("id", "correct");
@@ -228,7 +240,7 @@ function renderCorrectMsg() {
     centerBoxEl.appendChild(correctMsg);
 }
 
-// Creates the message to display when wrong answers are submitted
+// Creating a message to display when wrong answers are submitted
 function renderWrongMsg() {
     let wrongMsg = document.createElement("div");
     wrongMsg.setAttribute("id", "wrong");
@@ -236,24 +248,25 @@ function renderWrongMsg() {
     centerBoxEl.appendChild(wrongMsg);
 }
 
-// Function to empty the contents of the main div such that the next question or other content can render in the div
+// Creating a function to empty the contents of the main div such that the next question or other content can render in the div
 function removeAllChildElements () {
     while(centerBoxEl.firstChild) {
         centerBoxEl.firstChild.remove();
     }
 }
 
-// let lastHighscore = localStorage.getItem("user-score");
-// let lastInitials = localStorage.getItem("user-initials");
+// Creating empty arrays for which to push the user's initials and user's score into upon quiz completion
+// to allow storing them to local storage and displaying on the RECENT SCORES page
 let usersArray = [];
 let scoresArray = [];
 
-// Function to display an 'All Done' page when all questions are answered or the time is out
+// Creating a function to display an 'All Done' page when all questions are answered or the time is out
 function displayAllDone() {
 
-    // Clear the main div of question contents
+    // Clearing the center-box div of question contents
     removeAllChildElements();
 
+    // Clearing the timer if all questions were answered and time was left and hide the time display
     timeEl.setAttribute("style", "display: none");
     clearInterval(timerInterval);
 
@@ -266,11 +279,10 @@ function displayAllDone() {
     // Creating a paragraph element to display the user score
     let yourScoreEl = document.createElement("p");
     yourScoreEl.setAttribute("id", "your-score-is");
-    // localStorage.setItem("user-score", userScore);
     yourScoreEl.textContent = "Your score is: " + userScore;
     centerBoxEl.appendChild(yourScoreEl);
 
-    // Creating the Initials input field and submit button and adding to page
+    // Creating the Initials input field and submit button and displaying to page
     let formEl = document.createElement("form");
     let initialsDiv = document.createElement("div");
     let labelEl = document.createElement("label");
@@ -281,8 +293,10 @@ function displayAllDone() {
     labelEl.textContent = "Enter initials: ";
     initialsEl.setAttribute("type", "text");
     initialsEl.setAttribute("id", "initials");
+    // Setting max length of initials input
     initialsEl.setAttribute("maxlength", 10);
     initialsEl.setAttribute("placeholder", "Your Initials");
+    // Requiring an input in the input field to throw a message if user's try to submit without inputting initials
     initialsEl.required = true;
     submitEl.setAttribute("type", "submit");
     submitEl.setAttribute("id", "submit-initials");
@@ -294,35 +308,42 @@ function displayAllDone() {
     initialsDiv.appendChild(initialsEl);
     formEl.appendChild(submitEl); 
     
-    // ****ADD A FUNCTION/LOCAL STORAGE OF INITIALS INPUT
-    // TO RENDER ON THE HIGHSCORES PAGE'
-
+    // When the submit button is clicked for submitting the user's initials...
     formEl.addEventListener("submit", function(event) {
+        // ...prevent the default behavior for submitting a form...
         event.preventDefault;
+        // ...pull the user's input and trim any white space
         let userInitials = document.querySelector("input").value.trim();
+        // ...push the user's initials and their score into the respective arrays
         usersArray.push(userInitials);
         scoresArray.push(userScore);
+        // ...run the functions to store the user's score and initials to local storage
         storeScores();
         storeUsers();
+        // ...then render the page that displays scores
         renderHighscoresPage();
     });
     
 }
 
+// Creating the function that stores the array of user's initials to local storage
 function storeUsers() {
     localStorage.setItem("user-initials", JSON.stringify(usersArray));
 }
 
+// Creating the function that stores the array of user's scores to local storage
 function storeScores() {
     localStorage.setItem("user-scores", JSON.stringify(scoresArray));
 }
 
+// Creating a function to render the user's score (and past scores) on the page
 function renderScores() {
-    // Add and display highscores list
+    // Adding a place to display scores list on page
     let highscoresListEl = document.createElement("ul");
     centerBoxEl.appendChild(highscoresListEl);
 
-    // Render the highscores
+    // Creating a list item for each user in the user's array, 
+    // and displaying each user's initials and their score on the page
     for(i = 0; i < usersArray.length; i++) {
         let highscoresListItemEl = document.createElement("li");
         highscoresListItemEl.textContent = usersArray[i] + ":  " + scoresArray[i];
@@ -331,18 +352,22 @@ function renderScores() {
         };
 }
 
+// Creating a function to display the Scores page...
 function renderHighscoresPage() {
-    // Clear main div of previous contents
+    // Clearing center-box of previous contents
     removeAllChildElements();
 
-    // Add and display highscores title
+    // Adding and displaying scores title
     let highscoresTitleEl = document.createElement("h2");
     highscoresTitleEl.textContent = "RECENT SCORES";
     highscoresTitleEl.setAttribute("id", "highscores-title");
     centerBoxEl.appendChild(highscoresTitleEl);
 
+    // Rendering all stored scores, if any, and current user's score
     renderScores();
     
+    // Adding a start button to the page
+    // which is contained in a div such that it can flex to display in a row with the clear scores button
     let optionsDiv = document.createElement("options-div");
     optionsDiv.setAttribute("id", "options-div");
     let returnToStartBtn = document.createElement("button");
@@ -350,31 +375,31 @@ function renderHighscoresPage() {
     returnToStartBtn.textContent = "Return to Start";
     centerBoxEl.appendChild(optionsDiv);
     optionsDiv.appendChild(returnToStartBtn);
+
+    // When the return to start button is click, reload quiz to start
     returnToStartBtn.addEventListener('click', function() {
         location.reload();
     })
     
-    // Add and display a button to clear the high scores with event listener
+    // Adding and displaying a button to clear the scores list 
     let clearHighscoresBtn = document.createElement("button");
     clearHighscoresBtn.setAttribute("id", "clear-highscores");
     clearHighscoresBtn.textContent = "Clear Scores";
     optionsDiv.appendChild(clearHighscoresBtn);
+    // When the button is clicked...
     clearHighscoresBtn.addEventListener('click', function() {
-        // while(highscoresListEl.firstChild) {
-        //     highscoresListEl.firstChild.remove();
-        // }
+        // ...clear the locally stored user initials and scores
         localStorage.clear();
+        // ...and remove all names/scores listed on page
         removeAllChildElements();
+        // ...re-render the page title, empty scores box, and return to start button
         let highscoresTitleEl = document.createElement("h2");
         highscoresTitleEl.setAttribute("id", "highscores-title-cleared")
         highscoresTitleEl.textContent = "RECENT SCORES";
         centerBoxEl.appendChild(highscoresTitleEl);
-
         let emptyHighscores = document.createElement("p");
         emptyHighscores.setAttribute("id", "empty-highscores");
         centerBoxEl.appendChild(emptyHighscores);
-        // returnToStart();
-
         let returnToStartBtn = document.createElement("button");
         returnToStartBtn.textContent = "Return to Start";
         returnToStartBtn.setAttribute("id", "return-start-cleared");
@@ -386,31 +411,22 @@ function renderHighscoresPage() {
     })
 }
 
-// function returnToStart () {
-//     // Add and display a button to return to start with event listener
-//     let returnToStartBtn = document.createElement("button");
-//     returnToStartBtn.textContent = "Return to Start";
-//     centerBoxEl.appendChild(returnToStartBtn);
-//     returnToStartBtn.addEventListener('click', function() {
-//         location.reload();
-//     })
-// }
-
-// Making View Highscores button display the highscores list
+// When the View Scores button is clicked, it renders the scores page
 highscoreBtn.addEventListener('click', renderHighscoresPage);
 
+// Creatiing a function for pulling stored contents when the page loads...
 function init() {
+    // ...grab the locally stored user initials and scores and convert to arrays
     let storedUsers = JSON.parse(localStorage.getItem("user-initials"));
     let storedScores = JSON.parse(localStorage.getItem("user-scores"));
+    // If the array of stored users and stored scores have items, replace the default empty array with the stored ones
     if(storedUsers !== null) {
         usersArray = storedUsers;
     }
     if(storedScores !== null) {
         scoresArray = storedScores;
     }
-    // renderScores();
-    console.log(usersArray);
-    console.log(scoresArray);
 }
 
+// Calling the function to pull locally stored content...
 init();

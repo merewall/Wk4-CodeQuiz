@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Quiz</title>
-    <!-- Link reset style sheet and styles -->
+    <title>| Code Quiz |</title>
+    <!-- Linking reset style sheet -->
     <link rel="stylesheet" href="./Assets/CSS/reset.css">
+    <!-- Sourced page font from Google Fonts (https://fonts.google.com/) and linking to page -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap">
+    <!-- Linking stylesheet -->
     <link rel="stylesheet" href="./Assets/CSS/style.css">
 </head>
 <body>
+    <!-- Header to contain a View Scores button and the countdown timer -->
     <header>
         <button type="button" id="view-highscores">View Scores</button>
         <div id="time"></div>
     </header>
+    <!-- Main div set to flex to position center box content -->
     <div id = main>
+        <!-- Div in which to dynamically generate content for start, questions, all done, and view scores pages  -->
         <div id="center-box"></div>
     </div>
+    <!-- Linking javascript -->
     <script src="./Assets/JS/script.js"></script>
 </body>
 </html>
