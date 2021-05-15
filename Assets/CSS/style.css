@@ -24,7 +24,7 @@ header {
     color: var(--gray);
     border: none;
     background-color: var(--dark);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: normal;
 }
 
@@ -67,7 +67,7 @@ h1 {
 h2 {
     font-size: 20px;
     text-align: justify;
-    padding: 6px;
+    padding: 10px;
 }
 
 form {
@@ -79,7 +79,7 @@ p, ul {
     background-color: var(--gray);
     color: var(--dark);
     font-weight: 550;
-    padding: 10px; 
+    padding: 12px; 
 }
 
 form div {
