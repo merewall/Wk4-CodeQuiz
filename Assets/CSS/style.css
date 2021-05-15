@@ -162,11 +162,13 @@ li {
     border-radius: 0px 0px 0px 15px;
     border-right-color: var(--dark);
     border-right-width: 1.5px;
+    font-size: 16px;
 }
 
 #clear-highscores {
     border-radius: 0px 0px 15px 0px;
     border-left-color: var(--dark);
+    font-size: 16px;
 }
 
 #return-start-cleared {
