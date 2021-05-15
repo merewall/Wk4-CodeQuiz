@@ -182,6 +182,7 @@ li {
     border: 1px solid var(--gray);
     border-bottom: 1px solid var(--dark);
     border-radius: 15px 15px 0px 0px;
+    text-align: center;
 }
 
 #empty-highscores {
@@ -194,6 +195,25 @@ input:invalid {
 
 #initials, input:focus:invalid {
   box-shadow: none;
+}
+
+button:hover {
+    box-shadow: 0px 0px 5px var(--peach);
+    cursor: pointer;
+    text-shadow: 1px 1px var(--gray);
+}
+
+#view-highscores:hover {
+    box-shadow: none;
+    text-shadow: 0.5px 0.5px var(--gray);
+}
+
+label:hover {
+    font-weight: bolder;
+}
+
+#initials-label:hover {
+    font-weight: normal;
 }
 
 /* Adjust for tablet screens */
@@ -239,7 +259,11 @@ input:invalid {
         padding-top: 16px;
     }
 
-    #correct, #wrong, #error-msg {
+    #correct, 
+    #wrong, 
+    #error-msg, 
+    #return-start,
+    #clear-highscores {
         font-size: 18px;
     }
 
@@ -302,7 +326,11 @@ input:invalid {
         padding-top: 20px;
     }
 
-    #correct, #wrong, #error-msg {
+    #correct, 
+    #wrong, 
+    #error-msg,
+    #return-start,
+    #clear-highscores {
         font-size: 20px;
     }
     
