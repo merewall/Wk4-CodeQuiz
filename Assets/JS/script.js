@@ -1,9 +1,9 @@
 // Creating a variable to select the timer div and set the start time count
 let timeEl = document.getElementById("time");
-let secondsLeft = 90;
+let secondsLeft = 60;
 
 // Creating a variable to select the main div to display questions or other content
-let mainEl = document.getElementById("main");
+let centerBoxEl = document.getElementById("center-box");
 
 // Creating a variable for the View The Highscore button
 let highscoreBtn = document.getElementById("view-highscores");
@@ -14,15 +14,16 @@ let userScore = 0
 function renderStartPage() {
     let quizTitleEl = document.createElement("h1");
     quizTitleEl.textContent = "CODING QUIZ";
-    mainEl.appendChild(quizTitleEl);
+    centerBoxEl.appendChild(quizTitleEl);
 
     let quizBlurbEl = document.createElement("p");
-    quizBlurbEl.textContent = "placeholder content";
-    mainEl.appendChild(quizBlurbEl);
+    quizBlurbEl.innerHTML = "Test your coding knowledge! <br></br> Answer the questions in the alloted time and see what you score! Be careful -- wrong answers will cost you 10 seconds. <br></br> Good luck!";
+    centerBoxEl.appendChild(quizBlurbEl);
 
     let startBtn = document.createElement("button");
-    startBtn.textContent = "Start Quiz";
-    mainEl.appendChild(startBtn);
+    startBtn.textContent = "START QUIZ";
+    startBtn.setAttribute("id", "start-btn")
+    centerBoxEl.appendChild(startBtn);
 
     startBtn.addEventListener('click', function() {
         // Begin timer interval decrementation when start button clicked
@@ -39,7 +40,7 @@ function setTime() {
     // Create a variable that is a function that decrements the time by 1/sec and displays on the page
         timerInterval = setInterval(function() {
         secondsLeft--;
-        timeEl.textContent = "Time: " + secondsLeft;
+        timeEl.innerHTML = "Time:" + secondsLeft + "s";
 
         if(secondsLeft === 0) {
             // Stops countdown of interval
@@ -109,17 +110,21 @@ function renderQuestion() {
     // Add and display the question
     let questionEl = document.createElement("h2");
     questionEl.textContent = allQuestions[currQuestionIndex].questionNum + ".  " + allQuestions[currQuestionIndex].question;
-    mainEl.appendChild(questionEl);
+    centerBoxEl.appendChild(questionEl);
     
     // Add and display the question answers
     let ansChoicesEl = document.createElement("form");
+    let divAns1 = document.createElement("div");
     let ansChoice1 = document.createElement("input");
-    let ansChoice2 = document.createElement("input");
-    let ansChoice3 = document.createElement("input");
-    let ansChoice4 = document.createElement("input");
     let ansChoice1Label = document.createElement("label");
+    let divAns2 = document.createElement("div");
+    let ansChoice2 = document.createElement("input");
     let ansChoice2Label = document.createElement("label");
+    let divAns3 = document.createElement("div");
+    let ansChoice3 = document.createElement("input");
     let ansChoice3Label = document.createElement("label");
+    let divAns4 = document.createElement("div");
+    let ansChoice4 = document.createElement("input");
     let ansChoice4Label = document.createElement("label");
     let ansSubmit = document.createElement("button");
     ansChoice1.setAttribute("type", "radio");
@@ -148,15 +153,19 @@ function renderQuestion() {
     ansChoice4Label.setAttribute("for", "choice-4");
     ansSubmit.setAttribute("type", "submit");
     ansSubmit.textContent = "SUBMIT";
-    mainEl.appendChild(ansChoicesEl);
-    ansChoicesEl.appendChild(ansChoice1);
-    ansChoicesEl.appendChild(ansChoice1Label);
-    ansChoicesEl.appendChild(ansChoice2);
-    ansChoicesEl.appendChild(ansChoice2Label);
-    ansChoicesEl.appendChild(ansChoice3);
-    ansChoicesEl.appendChild(ansChoice3Label);
-    ansChoicesEl.appendChild(ansChoice4);
-    ansChoicesEl.appendChild(ansChoice4Label);
+    centerBoxEl.appendChild(ansChoicesEl);
+    ansChoicesEl.appendChild(divAns1);
+    divAns1.appendChild(ansChoice1);
+    divAns1.appendChild(ansChoice1Label);
+    ansChoicesEl.appendChild(divAns2);
+    divAns2.appendChild(ansChoice2);
+    divAns2.appendChild(ansChoice2Label);
+    ansChoicesEl.appendChild(divAns3);
+    divAns3.appendChild(ansChoice3);
+    divAns3.appendChild(ansChoice3Label);
+    ansChoicesEl.appendChild(divAns4);
+    divAns4.appendChild(ansChoice4);
+    divAns4.appendChild(ansChoice4Label);
     ansChoicesEl.appendChild(ansSubmit);
     
     // Creating a function to check if an answer is chosen, display either correct or wrong and
@@ -166,27 +175,35 @@ function renderQuestion() {
 
         // When the question form is submitted...
         ansChoicesEl.addEventListener("submit", function(event) {
-
+            if (!document.querySelector("input:checked")) {
+                ansChoice1.required = true;
+                ansChoice2.required = true;
+                ansChoice3.required = true;
+                ansChoice4.required = true;
+                let errorMsg = document.createElement("div");
+                errorMsg.setAttribute("id", "error-msg");
+                errorMsg.textContent = "Please select an answer."
+                centerBoxEl.appendChild(errorMsg);
+            }
             // Prevent the default behavior...
             event.preventDefault();
 
             // and pull the user's selection...
-            let userAnswer = document.querySelector("input:checked").getAttribute("value");
+            let userAnswer = document.querySelector("input:checked").value;
 
             // if the user's selection matches the correct answer, display a 'Correct!' message and increase the score by 20pts
+            // if (userAnswer)
             if (userAnswer === allQuestions[currQuestionIndex].correct) {
-                renderCorrectMsg();
-                userScore = userScore + 20;
-                console.log(userScore);
-                
+                    renderCorrectMsg();
+                    userScore = userScore + 20;                
             }   // but if the user's selection doesn't match the correct answer, display a 'Wrong!' message and decrement the timer by 5sec
                 else {
-                renderWrongMsg();
-                secondsLeft = secondsLeft - 5;
+                    renderWrongMsg();
+                    secondsLeft = secondsLeft - 10;
                 }
 
             // After 1 second....
-            let nextQuestion = setTimeout(function() {
+            setTimeout(function() {
                 // Render the next question if all the questions haven't been asked...
                 if(currQuestionIndex < allQuestions.length - 1) {
                     currQuestionIndex++;
@@ -206,23 +223,23 @@ function renderQuestion() {
 // Creates the message to display when correct answers are submitted
 function renderCorrectMsg() {
     let correctMsg = document.createElement("div");
-    correctMsg.setAttribute("class", "correct-wrong");
+    correctMsg.setAttribute("id", "correct");
     correctMsg.textContent = "Correct!";
-    mainEl.appendChild(correctMsg);
+    centerBoxEl.appendChild(correctMsg);
 }
 
 // Creates the message to display when wrong answers are submitted
 function renderWrongMsg() {
     let wrongMsg = document.createElement("div");
-    wrongMsg.setAttribute("class", "correct-wrong");
+    wrongMsg.setAttribute("id", "wrong");
     wrongMsg.textContent = "Wrong!";
-    mainEl.appendChild(wrongMsg);
+    centerBoxEl.appendChild(wrongMsg);
 }
 
 // Function to empty the contents of the main div such that the next question or other content can render in the div
 function removeAllChildElements () {
-    while(mainEl.firstChild) {
-        mainEl.firstChild.remove();
+    while(centerBoxEl.firstChild) {
+        centerBoxEl.firstChild.remove();
     }
 }
 
@@ -242,49 +259,55 @@ function displayAllDone() {
 
     // Creating the ALL DONE title 
     let allDoneEl = document.createElement("h2");
+    allDoneEl.setAttribute("id", "all-done");
     allDoneEl.textContent = "ALL DONE";
-    mainEl.appendChild(allDoneEl);
+    centerBoxEl.appendChild(allDoneEl);
 
     // Creating a paragraph element to display the user score
     let yourScoreEl = document.createElement("p");
-    localStorage.setItem("user-score", userScore);
+    yourScoreEl.setAttribute("id", "your-score-is");
+    // localStorage.setItem("user-score", userScore);
     yourScoreEl.textContent = "Your score is: " + userScore;
-    mainEl.appendChild(yourScoreEl);
+    centerBoxEl.appendChild(yourScoreEl);
 
     // Creating the Initials input field and submit button and adding to page
     let formEl = document.createElement("form");
+    let initialsDiv = document.createElement("div");
     let labelEl = document.createElement("label");
     let initialsEl = document.createElement("input");
     let submitEl = document.createElement("button");
     labelEl.setAttribute("for", "initials");
+    labelEl.setAttribute("id", "initials-label");
     labelEl.textContent = "Enter initials: ";
     initialsEl.setAttribute("type", "text");
     initialsEl.setAttribute("id", "initials");
+    initialsEl.setAttribute("maxlength", 10);
     initialsEl.setAttribute("placeholder", "Your Initials");
-    submitEl.setAttribute("type", "button");
+    initialsEl.required = true;
+    submitEl.setAttribute("type", "submit");
     submitEl.setAttribute("id", "submit-initials");
+    initialsDiv.setAttribute("id", "initials-div");
     submitEl.textContent = "SUBMIT";
-    mainEl.appendChild(formEl);
-    formEl.appendChild(labelEl);
-    formEl.appendChild(initialsEl);
+    centerBoxEl.appendChild(formEl);
+    formEl.appendChild(initialsDiv);
+    initialsDiv.appendChild(labelEl);
+    initialsDiv.appendChild(initialsEl);
     formEl.appendChild(submitEl); 
     
     // ****ADD A FUNCTION/LOCAL STORAGE OF INITIALS INPUT
     // TO RENDER ON THE HIGHSCORES PAGE'
 
-    submitEl.addEventListener("click", function(event) {
+    formEl.addEventListener("submit", function(event) {
         event.preventDefault;
-        let userInitials = document.querySelector("input").value;
+        let userInitials = document.querySelector("input").value.trim();
         usersArray.push(userInitials);
         scoresArray.push(userScore);
-        // console.log(usersArray);
-        // console.log(scoresArray);
         storeScores();
         storeUsers();
         renderHighscoresPage();
     });
+    
 }
-
 
 function storeUsers() {
     localStorage.setItem("user-initials", JSON.stringify(usersArray));
@@ -297,7 +320,7 @@ function storeScores() {
 function renderScores() {
     // Add and display highscores list
     let highscoresListEl = document.createElement("ul");
-    mainEl.appendChild(highscoresListEl);
+    centerBoxEl.appendChild(highscoresListEl);
 
     // Render the highscores
     for(i = 0; i < usersArray.length; i++) {
@@ -314,17 +337,28 @@ function renderHighscoresPage() {
 
     // Add and display highscores title
     let highscoresTitleEl = document.createElement("h2");
-    highscoresTitleEl.textContent = "HIGHSCORES";
-    mainEl.appendChild(highscoresTitleEl);
+    highscoresTitleEl.textContent = "RECENT SCORES";
+    highscoresTitleEl.setAttribute("id", "highscores-title");
+    centerBoxEl.appendChild(highscoresTitleEl);
 
     renderScores();
     
-    returnToStart();
+    let optionsDiv = document.createElement("options-div");
+    optionsDiv.setAttribute("id", "options-div");
+    let returnToStartBtn = document.createElement("button");
+    returnToStartBtn.setAttribute("id", "return-start");
+    returnToStartBtn.textContent = "Return to Start";
+    centerBoxEl.appendChild(optionsDiv);
+    optionsDiv.appendChild(returnToStartBtn);
+    returnToStartBtn.addEventListener('click', function() {
+        location.reload();
+    })
     
     // Add and display a button to clear the high scores with event listener
     let clearHighscoresBtn = document.createElement("button");
-    clearHighscoresBtn.textContent = "Clear Highscores";
-    mainEl.appendChild(clearHighscoresBtn);
+    clearHighscoresBtn.setAttribute("id", "clear-highscores");
+    clearHighscoresBtn.textContent = "Clear Scores";
+    optionsDiv.appendChild(clearHighscoresBtn);
     clearHighscoresBtn.addEventListener('click', function() {
         // while(highscoresListEl.firstChild) {
         //     highscoresListEl.firstChild.remove();
@@ -332,22 +366,35 @@ function renderHighscoresPage() {
         localStorage.clear();
         removeAllChildElements();
         let highscoresTitleEl = document.createElement("h2");
-        highscoresTitleEl.textContent = "HIGHSCORES";
-        mainEl.appendChild(highscoresTitleEl);
-        returnToStart();
+        highscoresTitleEl.setAttribute("id", "highscores-title-cleared")
+        highscoresTitleEl.textContent = "RECENT SCORES";
+        centerBoxEl.appendChild(highscoresTitleEl);
 
-    })
-}
+        let emptyHighscores = document.createElement("p");
+        emptyHighscores.setAttribute("id", "empty-highscores");
+        centerBoxEl.appendChild(emptyHighscores);
+        // returnToStart();
 
-function returnToStart () {
-    // Add and display a button to return to start with event listener
-    let returnToStartBtn = document.createElement("button");
-    returnToStartBtn.textContent = "Return to Start";
-    mainEl.appendChild(returnToStartBtn);
-    returnToStartBtn.addEventListener('click', function() {
+        let returnToStartBtn = document.createElement("button");
+        returnToStartBtn.textContent = "Return to Start";
+        returnToStartBtn.setAttribute("id", "return-start-cleared");
+        centerBoxEl.appendChild(returnToStartBtn);
+        returnToStartBtn.addEventListener('click', function() {
         location.reload();
     })
+
+    })
 }
+
+// function returnToStart () {
+//     // Add and display a button to return to start with event listener
+//     let returnToStartBtn = document.createElement("button");
+//     returnToStartBtn.textContent = "Return to Start";
+//     centerBoxEl.appendChild(returnToStartBtn);
+//     returnToStartBtn.addEventListener('click', function() {
+//         location.reload();
+//     })
+// }
 
 // Making View Highscores button display the highscores list
 highscoreBtn.addEventListener('click', renderHighscoresPage);
