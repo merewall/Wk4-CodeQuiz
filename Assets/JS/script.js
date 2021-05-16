@@ -9,7 +9,10 @@ let centerBoxEl = document.getElementById("center-box");
 let highscoreBtn = document.getElementById("view-highscores");
 
 // Setting score to zero at start
-let userScore = 0
+let userScore = 0;
+
+// Setting correct answer count to zero at start
+let numOfCorrect = 0;
 
 // Creating a variable for the timer such that the interval can be cleared when all questions are answered or time is 0
 let timerInterval;
@@ -141,10 +144,14 @@ function renderQuestion() {
     ansChoice2.setAttribute("type", "radio");
     ansChoice3.setAttribute("type", "radio");
     ansChoice4.setAttribute("type", "radio");
-    ansChoice1.setAttribute("id", "choice-1");
-    ansChoice2.setAttribute("id", "choice-2");
-    ansChoice3.setAttribute("id", "choice-3");
-    ansChoice4.setAttribute("id", "choice-4");
+    ansChoice1Label.setAttribute("id", "choice-1");
+    ansChoice2Label.setAttribute("id", "choice-2");
+    ansChoice3Label.setAttribute("id", "choice-3");
+    ansChoice4Label.setAttribute("id", "choice-4");
+    ansChoice1.setAttribute("id", "choice-1-radio");
+    ansChoice2.setAttribute("id", "choice-2-radio");
+    ansChoice3.setAttribute("id", "choice-3-radio");
+    ansChoice4.setAttribute("id", "choice-4-radio");
     ansChoice1.setAttribute("value", "choice-1");
     ansChoice2.setAttribute("value", "choice-2");
     ansChoice3.setAttribute("value", "choice-3");
@@ -158,10 +165,10 @@ function renderQuestion() {
     ansChoice2Label.textContent = allQuestions[currQuestionIndex].choice2;
     ansChoice3Label.textContent = allQuestions[currQuestionIndex].choice3;
     ansChoice4Label.textContent = allQuestions[currQuestionIndex].choice4;
-    ansChoice1Label.setAttribute("for", "choice-1");
-    ansChoice2Label.setAttribute("for", "choice-2");
-    ansChoice3Label.setAttribute("for", "choice-3");
-    ansChoice4Label.setAttribute("for", "choice-4");
+    ansChoice1Label.setAttribute("for", "choice-1-radio");
+    ansChoice2Label.setAttribute("for", "choice-2-radio");
+    ansChoice3Label.setAttribute("for", "choice-3-radio");
+    ansChoice4Label.setAttribute("for", "choice-4-radio");
     ansSubmit.setAttribute("type", "submit");
     ansSubmit.textContent = "SUBMIT";
     centerBoxEl.appendChild(ansChoicesEl);
@@ -203,14 +210,23 @@ function renderQuestion() {
             // ...and pull the user's selection...
             let userAnswer = document.querySelector("input:checked").value;
 
-            // ...if the user's selection matches the correct answer, display a 'Correct!' message and increase the score by 20pts
+            // ...if the user's selection matches the correct answer, display a 'Correct!' message, increase the score by 20pts
+            // and increase the count of the number of correct answers by 1
             if (userAnswer === allQuestions[currQuestionIndex].correct) {
                     renderCorrectMsg();
-                    userScore = userScore + 20;                
+                    userScore = userScore + 20;
+                    numOfCorrect++;                
             }   // but if the user's selection doesn't match the correct answer, display a 'Wrong!' message and decrement the timer by 10sec
                 else {
                     renderWrongMsg();
                     secondsLeft = secondsLeft - 10;
+                    // change style of user answer to italics and darkpeach
+                    let selectUserAns = document.getElementById(userAnswer);
+                    selectUserAns.setAttribute("style", "font-style: italic; color: var(--darkpeach); font-weight: bolder;");
+                    //  and show correct answer in italics and bold
+                    let correctValue = allQuestions[currQuestionIndex].correct;
+                    let selectCorrectAns = document.getElementById(correctValue);
+                    selectCorrectAns.setAttribute("style", "font-style: italic; font-weight: bolder;");
                 }
 
             // Give the correct/wrong message 1 second time to display and then....
@@ -224,7 +240,7 @@ function renderQuestion() {
                     else {
                     displayAllDone();
                 }   
-            }, 1000);
+            }, 1500);
     })
     };
 
@@ -276,10 +292,10 @@ function displayAllDone() {
     allDoneEl.textContent = "ALL DONE";
     centerBoxEl.appendChild(allDoneEl);
 
-    // Creating a paragraph element to display the user score
+    // Creating a paragraph element to display the user score and the number of correct answers
     let yourScoreEl = document.createElement("p");
     yourScoreEl.setAttribute("id", "your-score-is");
-    yourScoreEl.textContent = "Your score is: " + userScore;
+    yourScoreEl.innerHTML = "You answered " + numOfCorrect + " out of " + allQuestions.length + " questions correctly. <br></br> Your score is: " + userScore;
     centerBoxEl.appendChild(yourScoreEl);
 
     // Creating the Initials input field and submit button and displaying to page
