@@ -207,13 +207,15 @@ function renderQuestion() {
             // ... and prevent the default behavior of a form submission...
             event.preventDefault();
 
-            // ...and pull the user's selection...
+            // ...and pull the user's selection and the label attached to the answer...
             let userAnswer = document.querySelector("input:checked").value;
+            let selectUserAns = document.getElementById(userAnswer);
 
             // ...if the user's selection matches the correct answer, display a 'Correct!' message, increase the score by 20pts
             // and increase the count of the number of correct answers by 1
             if (userAnswer === allQuestions[currQuestionIndex].correct) {
                     renderCorrectMsg();
+                    selectUserAns.setAttribute("style", "font-style: italic; font-weight: bolder;");
                     userScore = userScore + 20;
                     numOfCorrect++;                
             }   // but if the user's selection doesn't match the correct answer, display a 'Wrong!' message and decrement the timer by 10sec
@@ -221,7 +223,6 @@ function renderQuestion() {
                     renderWrongMsg();
                     secondsLeft = secondsLeft - 10;
                     // change style of user answer to italics and darkpeach
-                    let selectUserAns = document.getElementById(userAnswer);
                     selectUserAns.setAttribute("style", "font-style: italic; color: var(--darkpeach); font-weight: bolder;");
                     //  and show correct answer in italics and bold
                     let correctValue = allQuestions[currQuestionIndex].correct;

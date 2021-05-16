@@ -126,8 +126,9 @@ button {
 
 /* Setting correct, wrong, and error messages to italics with padding to space below center-box*/
 #correct, #wrong, #error-msg {
-    padding-top: 8px;
+    padding-top: 12px;
     font-style: italic;
+    font-size: 20px;
 }
 
 /* Make correct message font color light green */
@@ -296,7 +297,7 @@ button:focus {
     #error-msg, 
     #return-start,
     #clear-highscores {
-        font-size: 18px;
+        font-size: 25px;
     }
 
     /* Adjust whitespace in empty scores list */
@@ -398,7 +399,7 @@ button:focus {
     #error-msg,
     #return-start,
     #clear-highscores {
-        font-size: 20px;
+        font-size: 30px;
     }
     
     /* Adjust whitespace in empty scores list */
