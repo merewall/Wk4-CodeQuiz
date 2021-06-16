@@ -1,5 +1,5 @@
 # Wk4-CodeQuiz
-Building a timed coding quiz with multiple choice questions from scratch.
+A timed coding quiz with multiple choice questions from scratch.
 ## Description
 This project was completed after learning JavaScript and Web APIs. The task was to create an online multiple choice quiz about coding concepts. The quiz is meant to use the concepts of DOM traversal, setting attributes, event listeners, timers, intervals, local storage, and dynamically updated HTML and CSS.
 
