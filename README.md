@@ -33,4 +33,4 @@ https://github.com/merewall/Wk4-CodeQuiz
 
 ## License
 
-Licensed under the [MIT LICENSE](https://github.com/merewall/Wk5-DayPlanner/blob/main/LICENSE)
+Licensed under the [MIT LICENSE](https://github.com/merewall/Wk4-CodeQuiz/blob/main/LICENSE)
