@@ -13,6 +13,8 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
+/* HEADER SECTION */
+
 /* Placing View Scores and Timer in a row */
 header {
     display: flex;
@@ -36,6 +38,8 @@ header {
     color: var(--gray);
     min-width: 150px;
 }
+
+/* CODE QUIZ MAIN CONTENT - FOR DYNAMIC GENERATED HTML */
 
 /* Centering the center-box within main body of page and adding extra padding at top */
 #main {
@@ -239,6 +243,8 @@ button:focus {
     box-shadow: none;
     text-shadow: 0.5px 0.5px var(--gray);
 }
+
+/* RESPONSIVENESS */
 
 /* Adjust display for tablet screens */
 @media screen and (min-width: 768px) {
