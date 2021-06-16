@@ -30,3 +30,7 @@ https://merewall.github.io/Wk4-CodeQuiz/
 
 The GitHub repository for this web application can be found:
 https://github.com/merewall/Wk4-CodeQuiz
+
+## License
+
+Licensed under the [MIT LICENSE](https://github.com/merewall/Wk5-DayPlanner/blob/main/LICENSE)
