@@ -23,6 +23,8 @@ The following image shows the web application's appearance and functionality:
 
 ![Demo video of code quiz](https://github.com/merewall/Wk4-CodeQuiz/blob/main/Assets/Images/code-quiz-demo.gif)    
 
+![Screenshot of code quiz](https://github.com/merewall/Wk4-CodeQuiz/blob/main/Assets/Images/code-quiz-screenshot.PNG) 
+
 ## Deployed Application Link
 
 The deployed GitHub page for this web application can be found: 
