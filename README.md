@@ -11,6 +11,13 @@ The following acceptance criteria were used in the development of this web appli
 * When all the questions are answered or the timer reaches 0, the quiz is over
 * When the quiz is over, the user can enter and save their initials and score to the page
 
+## Technologies Used
+* HTML 5
+* CSS
+* JavaScript
+* [Google Fonts](https://fonts.google.com/)
+* [Coolors](https://coolors.co/*/)
+
 ## Mock-Up
 The following image shows the web application's appearance and functionality:
 
