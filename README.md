@@ -7,9 +7,9 @@ The following acceptance criteria were used in the development of this web appli
 
 * When the user clicks the start button, a timer starts and the user is presented with a question.
 * When the user answers a question, the user is presented with the next question.
-* When the user answers a question incorrectly, time is subtracted from the clock
-* When all the questions are answered or the timer reaches 0, the quiz is over
-* When the quiz is over, the user can enter and save their initials and score to the page
+* When the user answers a question incorrectly, time is subtracted from the clock.
+* When all the questions are answered or the timer reaches 0, the quiz is over.
+* When the quiz is over, the user can enter and save their initials and score to the page.
 
 ## Technologies Used
 * HTML 5
